@@ -3,7 +3,7 @@ An end-to-end product analytics project that transforms raw sales and product da
 
 ---
 ## 🎯 Business Objective
-To analyze product sales performance across regions, customer segments, and discount strategies, and translate the findings into insights that support pricing, sales, and product decisions.
+Analyze product sales performance across regions, customer segments, and discount strategies to support pricing, sales, and product decisions.
 
 ---
 
