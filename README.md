@@ -2,12 +2,16 @@
 An end-to-end product analytics project that transforms raw sales and product data using PostgreSQL, and visualizes key business insights in an interactive Power BI dashboard to support data-driven decision making.
 
 ---
+## 🎯 Business Objective
+To analyze product sales performance across regions, customer segments, and discount strategies, and translate the findings into insights that support pricing, sales, and product decisions.
+
+---
 
 ## 🗂 Dataset Description
 **Main data includes:**
 - Product sales
 - Product description
-- Discount
+- Product discounts
 
 ---
 
@@ -25,22 +29,81 @@ An end-to-end product analytics project that transforms raw sales and product da
    - Joins
    - Common Table Expressions (CTE)
 
-3. **Visualization (Power BI)**
+```sql
+-- Joining product and sales tables using a CTE
+WITH cte AS (
+    SELECT 
+        p.product, 
+        p.category, 
+        p.brand, 
+        p.description,
+        p.sale_price, 
+        p.cost_price, 
+        p.image_url,
+        p.sale_price * s.units_sold AS revenue,
+        p.cost_price * s.units_sold AS total_cost,
+        s.date, 
+        s.customer_type, 
+        s.discount_band, 
+        s.units_sold,
+        TRIM(TO_CHAR(s.date, 'Month')) AS month,
+        TO_CHAR(s.date, 'YYYY') AS year
+    FROM products p
+    JOIN sales s
+        ON p.product_id = s.product
+)
+
+-- Calculating discounted revenue and joining with discount reference table
+SELECT 
+    *,
+    (1 - (discount / 100)) * revenue AS discount_revenue
+FROM cte c
+JOIN discounts d
+    ON LOWER(TRIM(c.discount_band)) = LOWER(TRIM(d.discount_band))
+    AND TRIM(c.month) = TRIM(d.month);
+```
+
+2. **Visualization (Power BI)**
    - KPI cards
-   - Department & project breakdowns
+   - Table breakdowns
    - Trend analysis
    - Interactive filters & slicers
 
 ---
 
 ## 📊 Dashboard Highlights
-This dashboard provides insights into:
+This interactive dashboard provides insights into:
 - Revenue and profit trends (YoY)
 - Product performance over time
 - Revenue distribution by country and customer type
 - Impact of discount bands on revenue
 - Units sold and profitability at the product level
+<img width="1117" height="693" alt="Screenshot 2025-12-19 134900" src="https://github.com/user-attachments/assets/4cccc7fe-ce63-4913-93c1-a122d7a94819" />
 
 ---
 
 ## 🔍 Key Insights
+- Government is the largest customer segment across all products
+- Sales peak consistently in June and October
+- High discount band generates the highest revenue
+- Canada contributes the most overall revenue
+- MV7 leads year-over-year profit growth, while Audiobox USB 96 Studio delivers the highest absolute profit
+
+--- 
+
+## ✅ Recommendations
+- Focus sales and account strategies on government customers
+- Leverage seasonal demand by strengthening campaigns and inventory planning around June and October.
+- Optimize discount strategies by prioritizing high-performing discount bands
+- Prioritize high-profit products (e.g. MV7, Audiobox USB 96 Studio) for pricing optimization and promotion, while review low-performing products for repositioning.
+- Deepen market penetration in Canada through targeted campaigns, while exploring growth potential in secondary markets with stable demand.
+
+## 👤 About the Author
+**Muhammad Naufaldi**  
+Physics graduate with interest in technology, innovation, and data analysis.
+
+### 🌐 Contact
+- **LinkedIn:** https://www.linkedin.com/in/muhammad-naufaldi-608517246/
+- **Portfolio:** https://linktr.ee/PortofolioNaufaldi
+
+  
