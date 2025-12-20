@@ -78,7 +78,8 @@ This interactive dashboard provides insights into:
 - Revenue distribution by country and customer type
 - Impact of discount bands on revenue
 - Units sold and profitability at the product level
-<img width="1117" height="693" alt="Screenshot 2025-12-19 134900" src="https://github.com/user-attachments/assets/4cccc7fe-ce63-4913-93c1-a122d7a94819" />
+![product_analytics_dashboard_page-0001](https://github.com/user-attachments/assets/e36a3125-2ae2-454c-bb2d-9d84a589b8c4)
+
 
 ---
 
